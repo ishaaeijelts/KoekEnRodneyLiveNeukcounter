@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koek en Rodney neuk counter live!</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: 'Arial Black', Impact, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 16px 60px;
+      text-align: center;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 6vw, 4rem);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #ff2222;
+      text-shadow: 0 0 20px #ff0000aa;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    #counter-display {
+      font-size: clamp(3rem, 12vw, 8rem);
+      font-weight: 900;
+      text-shadow: 0 0 30px #ff4444;
+      margin: 10px 0 20px;
+      transition: transform 0.1s;
+    }
+    #counter-display.bump { transform: scale(1.3); }
+    #status { font-size: 0.85rem; color: #888; margin-bottom: 30px; }
+    #btn {
+      background: #cc0000;
+      color: #fff;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 12px;
+      padding: 18px 50px;
+      cursor: pointer;
+      box-shadow: 0 0 24px #ff0000aa;
+      transition: transform 0.1s, background 0.1s;
+      margin-bottom: 40px;
+    }
+    #btn:hover { background: #ff0000; }
+    #btn:active { transform: scale(0.95); }
+    .photos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .photos img {
+      width: min(380px, 100%);
+      border-radius: 16px;
+      border: 4px solid #ff2222;
+      box-shadow: 0 0 30px #ff000077;
+      object-fit: cover;
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Koek en Rodney<br>neuk counter live!</h1>
+  <div id="counter-display">0</div>
+  <p id="status">op dit toestel: 0</p>
+  <button id="btn" onclick="increment()">🔴 +1 NEUK</button>
+  <div class="photos">
+    <img src="img1.jpeg" alt="Koek" />
+    <img src="img2.jpeg" alt="Rodney" />
+  </div>
+  <script>
+    let count = parseInt(localStorage.getItem("neukCount") || "0");
+    function update() {
+      document.getElementById("counter-display").textContent = count;
+      document.getElementById("status").textContent = "op dit toestel: " + count;
+      localStorage.setItem("neukCount", count);
+    }
+    function increment() {
+      count++;
+      update();
+      const el = document.getElementById("counter-display");
+      el.classList.remove("bump");
+      void el.offsetWidth;
+      el.classList.add("bump");
+      setTimeout(() => el.classList.remove("bump"), 150);
+    }
+    update();
+  </script>
+</body>
+</html>
